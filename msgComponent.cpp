@@ -128,6 +128,10 @@ void msgComponent::bind_regComponent(regComponent * in) {
 	reg = in;
 }
 
+void secComponent::bind_secComponent(secComponent * in) {
+	sec = in;
+}
+
 void msgComponent::draw_header() {
 	system("clear");
 	cout << "|------------TauNet Messenger------------|" << endl;
