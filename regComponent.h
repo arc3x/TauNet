@@ -12,6 +12,7 @@ class regComponent {
 		string message_out;
 		string message_in;
 		string key;
+        string username;
 		string IV;
 		string * dest_list; //ips
 		string * name_list; //usernames

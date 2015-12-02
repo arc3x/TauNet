@@ -36,6 +36,25 @@ void regComponent::loadKey() {
 	dest_file.close();
 }
 
+void regComponent::loadUsername() {
+    ifstream dest_file;
+	//******************************//
+	//****** READ CRYPTO KEY
+	//******************************//
+	//get lines in file
+	dest_file.open("username.sec");	
+	if(dest_file.is_open()) {
+		while(!dest_file.eof()) {
+			string s;
+			getline(dest_file,s);
+			if(s!="") {
+				username=s;
+			}
+		}
+	}
+	dest_file.close();
+}
+
 void regComponent::loadIPTable() {
 	//******************************//
 	//****** READ IP/USER LIST
