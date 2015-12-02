@@ -43,10 +43,13 @@ void* listen(void *threadid) {
           acceptor.accept(*stream.rdbuf(), ec);
           if (!ec)
           {           
+            string message;
             string line;
-            getline(stream, line);
+            while(getline(stream, line)) {
+                message=message+line;
+            }
             cout.clear();
-            cout << endl << endl << line << endl << endl << "TauNet [TO: " << reg->name_list[reg->dest] << "]> "; cout.flush();             
+            cout << endl << endl << message << endl << endl << "TauNet [TO: " << reg->name_list[reg->dest] << "]> "; cout.flush();             
           }
         }
         
@@ -111,7 +114,15 @@ void msgComponent::run() {
                   std::cout << "Unable to connect: " << stream.error().message() << std::endl;
                   //return;
                 }
-                stream << command;
+                //build message
+                string message;
+                message = string("version: 0.2\r\n") 
+                        + "from: " + reg->username + "\r\n"
+                        + "to: " + reg->dest_list[reg->dest] + "\r\n"
+                        + "\r\n"
+                        + command + "\r\n";
+                        
+                stream << message;
                 //std::string line;
                 //std::getline(stream, line);
                 //std::cout << line << std::endl;
@@ -128,7 +139,7 @@ void msgComponent::bind_regComponent(regComponent * in) {
 	reg = in;
 }
 
-void secComponent::bind_secComponent(secComponent * in) {
+void msgComponent::bind_secComponent(secComponent * in) {
 	sec = in;
 }
 
