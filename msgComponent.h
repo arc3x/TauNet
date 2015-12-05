@@ -5,6 +5,7 @@
 using namespace std;
 
 class regComponent;
+class secComponent;
 
 class msgComponent {
 	public:
