@@ -36,6 +36,8 @@ class regComponent {
 		void setKey(string k);
 		void saveKey(string k);
 		void loadKey();
+		void loadUsername();
+        
 
 		void setMsgIn(string m);
 		string getMsgIn();
