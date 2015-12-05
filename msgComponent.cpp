@@ -27,7 +27,7 @@ using boost::asio::ip::tcp;
 
 
 msgComponent::msgComponent() {
-	
+    
 }
 
 
@@ -122,33 +122,33 @@ void msgComponent::run() {
     }
     
  
-	command="";
-	//draw some ui
+    command="";
+    //draw some ui
     draw_header();
-	draw_dest();
+    draw_dest();
     
     //c&c loop
-	while(command!=":q") {        
+    while(command!=":q") {        
         //get input
-		get_input();
-		
+        get_input();
+        
         //parse special commands
         //list destinations
-		if(command==":dlist") {
-			reg->printDest();
-		}		
+        if(command==":dlist") {
+            reg->printDest();
+        }       
         //set destination
-		else if (command.find(":dset")==0) {
-			//cout << command.substr(6) << endl;
-			int d = atoi((command.substr(6)).c_str());
-			d--;
-			if(d>=0 && d<reg->dest_count) {
-				reg->setDest(d);
-				draw_dest();
-			} else {
-				cout << "Destination out of range." << endl;
-			}
-		}
+        else if (command.find(":dset")==0) {
+            //cout << command.substr(6) << endl;
+            int d = atoi((command.substr(6)).c_str());
+            d--;
+            if(d>=0 && d<reg->dest_count) {
+                reg->setDest(d);
+                draw_dest();
+            } else {
+                cout << "Destination out of range." << endl;
+            }
+        }
         
         //else, its a message, send it!
         //CODE derived from daytime_client.cpp (Boost::asio)
@@ -202,46 +202,46 @@ void msgComponent::run() {
                 std::cout << "Exception: " << e.what() << std::endl;
             }
         }
-		
-	}
+        
+    }
 }
 
 
 //let the msgComponent know about the regComponent
 void msgComponent::bind_regComponent(regComponent * in) {
-	reg = in;
+    reg = in;
 }
 
 
 //let the msgComponent know about the secComponent
 void msgComponent::bind_secComponent(secComponent * in) {
-	sec = in;
+    sec = in;
 }
 
 
 void msgComponent::draw_header() {
-	system("clear");
-	cout << "|------------TauNet Messenger------------|" << endl;
-	cout << "|  Commands" << endl;
-	cout << "|   :q        - quit" << endl;
-	cout << "|   :dlist    - list destinations" << endl;
-	cout << "|   :dset #   - set destination" << endl; 
-	cout << "|------------TauNet Messenger------------|" << endl;
+    system("clear");
+    cout << "|------------TauNet Messenger------------|" << endl;
+    cout << "|  Commands" << endl;
+    cout << "|   :q        - quit" << endl;
+    cout << "|   :dlist    - list destinations" << endl;
+    cout << "|   :dset #   - set destination" << endl; 
+    cout << "|------------TauNet Messenger------------|" << endl;
 }
 
 
 void msgComponent::draw_dest() {
-	cout << "***     DESTINATION: [" << reg->name_list[reg->dest] << "]" << reg->dest_list[reg->dest] << "     ***" << endl;	
+    cout << "***     DESTINATION: [" << reg->name_list[reg->dest] << "]" << reg->dest_list[reg->dest] << "     ***" << endl;    
 }
 
 
 void msgComponent::get_input() {
-	cout << endl;
-	cin.clear();
-	cout << "TauNet [TO: " << reg->name_list[reg->dest] << "]> ";
-	getline(cin,command);
+    cout << endl;
+    cin.clear();
+    cout << "TauNet [TO: " << reg->name_list[reg->dest] << "]> ";
+    getline(cin,command);
 }
 
 void msgComponent::draw_get_input() {
-	cout << "TauNet [TO: " << reg->name_list[reg->dest] << "]> ";
+    cout << "TauNet [TO: " << reg->name_list[reg->dest] << "]> ";
 }

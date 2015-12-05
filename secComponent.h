@@ -13,14 +13,14 @@ using namespace std;
 
 
 class secComponent {
-	private:
+    private:
        
         
-	public:
-		secComponent();
+    public:
+        secComponent();
         int encrypt(string, string, int, char*);
         int decrypt(char*, int, string, int, char *);
         string rc4(int, int, char*, int);
-		
+        
 };
 

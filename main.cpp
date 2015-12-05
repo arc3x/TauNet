@@ -28,18 +28,18 @@ uiComponent * ui= new uiComponent();
 
 int main(int argc, char *argv[]) {
    
-	msg->bind_regComponent(reg); 
+    msg->bind_regComponent(reg); 
     msg->bind_secComponent(sec);
-	reg->bind_msgComponent(msg);	
+    reg->bind_msgComponent(msg);    
     ui->bind_regComponent(reg);
     
-	if(argc > 1 && string(argv[1])=="-msg") {		
-		msg->run();
-	} else {
-		ui->run();
-	}
+    if(argc > 1 && string(argv[1])=="-msg") {       
+        msg->run();
+    } else {
+        ui->run();
+    }
   
-		
-	
-	
+        
+    
+    
 }
