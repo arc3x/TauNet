@@ -1,9 +1,6 @@
 /*
 DEPENDENCIES:
-ncurses? sudo apt-get install libncurses5-dev
-boost
-
-
+boost::asio  [sudo apt-get install libboost-all-dev]
 */
 
 
@@ -19,15 +16,16 @@ using namespace std;
 
 msgComponent * msg = new msgComponent();
 regComponent * reg = new regComponent();
-secComponent * reg = new secComponent();
+secComponent * sec = new secComponent();
 uiComponent * ui= new uiComponent();
 
 int main(int argc, char *argv[]) {
-	msg->bind_regComponent(reg);
+   
+	msg->bind_regComponent(reg); 
     msg->bind_secComponent(sec);
 	reg->bind_msgComponent(msg);	
     ui->bind_regComponent(reg);
-
+    
 	if(argc > 1 && string(argv[1])=="-msg") {		
 		msg->run();
 	} else {
