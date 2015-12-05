@@ -1,4 +1,14 @@
-//comComponent.h
+/*
+(c) Matthew Slocum
+
+regComponent.h
+
+regComponent is responsible for passing data around the rest of the program.
+    it tracks users, ips, the current destination, and the crypto key.
+
+*/
+
+
 
 #include <string>
 

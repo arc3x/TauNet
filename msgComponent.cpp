@@ -1,3 +1,14 @@
+/*
+(c) Matthew Slocum 2015
+
+msgComponent.cpp 
+
+msgComponent is resbonaible for sending and revieving messages
+    upon creation it spins off a thread to listen for incoming messages.
+    the parent process takes input from the user and executes commands or sends messages.
+
+*/
+
 #include <iostream>
 #include <stdlib.h>
 #include <boost/asio.hpp>

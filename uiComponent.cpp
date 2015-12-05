@@ -1,3 +1,16 @@
+/*
+(c) Matthew Slocum 2015
+
+uiComponent.cpp
+
+uiComponent is responsible for drawing the menus and interprating user input
+    the menu can:
+        change the destination
+        update destination list
+        change crypto key
+        start the messenger
+*/
+
 #include <iostream>
 #include <string>
 #include <stdlib.h>

@@ -1,4 +1,15 @@
-//uiComponent.h
+/*
+(c) Matthew Slocum 2015
+
+uiComponent.h
+
+uiComponent is responsible for drawing the menus and interprating user input
+    the menu can:
+        change the destination
+        update destination list
+        change crypto key
+        start the messenger
+*/
 
 #include <string>
 

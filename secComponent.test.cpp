@@ -1,3 +1,9 @@
+/*
+(c) Matthew Slocum 2015
+
+secComponent.test.cpp this file is responsible for unit test and component tests for the secComponent
+*/
+
 #include "secComponent.h"
 #include <cstring>
 #include <stdio.h>

@@ -1,4 +1,10 @@
-//secComponent.h
+/*
+(c) Matthew Slocum 2015
+
+secComponent.h
+
+secComponent is responsible for the encryption/decryption of messages.
+*/
 
 #include <string>
 

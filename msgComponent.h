@@ -1,4 +1,12 @@
-//msgComponent.h
+/*
+(c) Matthew Slocum
+
+msgComponent.h
+
+msgComponent is resbonaible for sending and revieving messages
+    upon creation it spins off a thread to listen for incoming messages.
+    the parent process takes input from the user and executes commands or sends messages.
+*/
 
 #include <string>
 

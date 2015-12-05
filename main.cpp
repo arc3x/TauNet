@@ -1,4 +1,11 @@
 /*
+(c) Matthew Slocum 2015
+
+main.cpp bootstraps the program.
+    loads up all the comonents of the program
+    links the components together
+    starts the program in either the menu or messenger depending on command line options
+
 DEPENDENCIES:
 boost::asio  [sudo apt-get install libboost-all-dev]
 */
