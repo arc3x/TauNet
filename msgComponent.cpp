@@ -137,15 +137,7 @@ void msgComponent::run() {
                 boost::asio::io_service io_service;
                 boost::asio::ip::tcp::resolver resolver(io_service);
                 boost::asio::ip::tcp::resolver::query query(reg->dest_list[reg->dest], "6283");
-                //XXXbelow is some crap REVISE IT!
-                //for(boost::asio::ip::tcp::resolver::iterator i = resolver.resolve(query);
-                //            i != boost::asio::ip::tcp::resolver::iterator();
-                //            ++i)
-                //{
-                    //boost::asio::ip::tcp::endpoint end = *i;
-                    //std::cout << end.address() << ' ';
-                //}
-                
+
                 //attempt to open connection
                 tcp::iostream stream(reg->dest_list[reg->dest], "6283");
                 if (!stream)
