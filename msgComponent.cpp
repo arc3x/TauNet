@@ -14,22 +14,16 @@ msgComponent is resbonaible for sending and revieving messages
 #include <boost/asio.hpp>
 #include <pthread.h>
 #include <string>
-       //#include <sys/types.h>
-       //#include <sys/socket.h>
-       //#include <netdb.h>
 #include "msgComponent.h"
 #include "regComponent.h"
 #include "secComponent.h"
 
-
 using namespace std;
 using boost::asio::ip::tcp;
-
 
 msgComponent::msgComponent() {
     
 }
-
 
 //Code derived from:
 // daytime_server.cpp
@@ -69,15 +63,6 @@ void* listen(void *threadid) {
             while(stream.get(c)) {           
                 msg[msg_count++]=c;
             }
-
-                    //debug code
-                    /*
-                    cout << "Recieveing (" << msg_count << "):" << endl;
-                    for(int i=0; i<msg_count; i++) {
-                        cout << msg[i];                        
-                    }
-                    cout << endl;
-                    */
             
             //make holder for plaintext
             char plaintext[msg_count];   
@@ -90,8 +75,7 @@ void* listen(void *threadid) {
             for(int i=0; i<msg_count-10; i++) {
                 cout << plaintext[i];
             }
-            cout << endl;
-            
+            cout << endl;        
             
             //redraw user input prompt
             cout.clear();cout.flush();    
@@ -107,11 +91,8 @@ void* listen(void *threadid) {
     pthread_exit(NULL);
 }
 
-
-
 void msgComponent::run() {
-    //pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; //for later
-    
+    //pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; //for later   
     //spin off thread for listener
     pthread_t thread;
     int rc;
@@ -119,9 +100,7 @@ void msgComponent::run() {
     if (rc){
         cout << "Error:unable to create thread," << rc << endl;
         exit(-1);
-    }
-    
- 
+    } 
     command="";
     //draw some ui
     draw_header();
@@ -130,8 +109,7 @@ void msgComponent::run() {
     //c&c loop
     while(command!=":q") {        
         //get input
-        get_input();
-        
+        get_input(); 
         //parse special commands
         //list destinations
         if(command==":dlist") {
@@ -160,13 +138,13 @@ void msgComponent::run() {
                 boost::asio::ip::tcp::resolver resolver(io_service);
                 boost::asio::ip::tcp::resolver::query query(reg->dest_list[reg->dest], "6283");
                 //XXXbelow is some crap REVISE IT!
-                for(boost::asio::ip::tcp::resolver::iterator i = resolver.resolve(query);
-                            i != boost::asio::ip::tcp::resolver::iterator();
-                            ++i)
-                {
-                    boost::asio::ip::tcp::endpoint end = *i;
+                //for(boost::asio::ip::tcp::resolver::iterator i = resolver.resolve(query);
+                //            i != boost::asio::ip::tcp::resolver::iterator();
+                //            ++i)
+                //{
+                    //boost::asio::ip::tcp::endpoint end = *i;
                     //std::cout << end.address() << ' ';
-                }
+                //}
                 
                 //attempt to open connection
                 tcp::iostream stream(reg->dest_list[reg->dest], "6283");
@@ -191,7 +169,7 @@ void msgComponent::run() {
                 sec->encrypt(message,reg->key,20, ciphertext);   
                 
                 //send the message
-                for(int i=0; i<message.length()+10; i++) {
+                for(unsigned int i=0; i<message.length()+10; i++) {
                     stream << ciphertext[i];
                 }
 

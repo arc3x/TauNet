@@ -66,11 +66,11 @@ int secComponent::encrypt(string m, string k, int r, char * ciphertext) {
     //create a holder(kp) for the key + iv
     char kp[10+k.length()];
     //load the key into kp  
-    for(int i=0; i<k.length(); i++) {
+    for(unsigned int i=0; i<k.length(); i++) {
         kp[i] = k[i];
     }
     //load the iv into kp
-    for(int i=k.length(); i<k.length()+10; i++) {
+    for(unsigned int i=k.length(); i<k.length()+10; i++) {
         kp[i] = iv[i-k.length()];
     }
     //get a keystream
@@ -105,11 +105,11 @@ int secComponent::decrypt(char* m, int m_len, string k, int r, char* plaintext) 
   //prepend k to iv (store in kp)
   char kp[k.length()+10];
   //put the key in
-  for(int i=0; i<k.length(); i++) {
+  for(unsigned int i=0; i<k.length(); i++) {
       kp[i] = k[i];
   }
   //put the iv in
-  for(int i=k.length(); i<k.length()+10; i++) {
+  for(unsigned int i=k.length(); i<k.length()+10; i++) {
       kp[i] = iv[i-k.length()];
   }
   //get a keystream
