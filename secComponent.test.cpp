@@ -30,7 +30,7 @@ int test_encrypt_decrypt_inverting(secComponent * sec, string message, string ke
     }
     //cout << endl;
     
-    for(int i=0; i<message.length(); i++) {
+    for(unsigned int i=0; i<message.length(); i++) {
         if(message[i]!=plaintext[i])
             return 0;
     }
@@ -139,7 +139,8 @@ int main(void) {
         cout << "secComponent.test Test 7 failed" << endl;
     }
     
-    
+    /*
+    XXX WIP
     //
     //Decrytion tests using known encrypted values
     //
@@ -155,7 +156,6 @@ int main(void) {
     ifstream cipherFile;
     cipherFile.open("tst/cstest1.cs1");
     
-    char c;
     int i=0;
     char ciphertext2 [1000];
     if (cipherFile.is_open()) {
@@ -168,8 +168,8 @@ int main(void) {
         cout<<ciphertext2;
     }
     cipherFile.close();
-    int plaintext_len = sec->decrypt(ciphertext, message.length()+10, key, r, plaintext);
-    
+    sec->decrypt(ciphertext, message.length()+10, key, r, plaintext);
+    */
     
     
     return 0;
