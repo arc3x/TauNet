@@ -30,7 +30,7 @@ secComponent::secComponent() {
 
 //"Produce an RC4 keystream of length" n "with" r "rounds of key scheduling given key" k "of length" l
 //returns keystream
-string secComponent::rc4(int n, int r, char* k, int l) {
+void secComponent::rc4(int n, int r, char* k, int l, char* keystream) {
   //init array
   unsigned char S [256] = { };
   for(int i=0; i<256; i++) {
@@ -45,44 +45,51 @@ string secComponent::rc4(int n, int r, char* k, int l) {
       }
   }
   //produce the keystream
-  string keystream;
+  //string keystream;
   j=0;
   int ip;
   for(int i=0; i<n; i++) {
       ip = (i+1) % 256;
       j = (j+S[ip]) % 256;
       swap(S[ip], S[j]);
-      keystream.append(to_string(S[(S[ip]+S[j]) % 256]));      
+      keystream[i] = S[(S[ip]+S[j]) % 256];      
   }
-  return keystream;
+  //return keystream;
 }
 
 //"Ciphersaber-2 encrypt message" m "with key" k "and" r "rounds of key scheduling" "outputting to" ciphertext
 //return length of ciphertext
 int secComponent::encrypt(string m, string k, int r, char * ciphertext) {
     //get length of message
-    int n = m.length();
-    string iv = "1234567890"; //CHANGEME
+    int n = m.length();   
+    //generate iv
+    unsigned char iv [10];
+    ifstream rng("/dev/urandom");
+    if (!rng) { cerr << "canot open /dev/urandom" << endl; exit(1); }
+    for (int i=0; i<10; ++i) { 
+        iv[i]=rng.get();
+    }    
     //create a holder(kp) for the key + iv
-    char kp[10+k.length()];
+    char kp[10+k.length()];   
     //load the key into kp  
     for(unsigned int i=0; i<k.length(); i++) {
         kp[i] = k[i];
-    }
+    }  
     //load the iv into kp
     for(unsigned int i=k.length(); i<k.length()+10; i++) {
         kp[i] = iv[i-k.length()];
-    }
+    }  
     //get a keystream
-    string keystream = rc4(n, r, kp, k.length()+10);
+    char keystream [1024];
+    rc4(n, r, kp, k.length()+10, keystream);    
     //load the iv into the payload
     for(int i=0; i<10; i++) {
         ciphertext[i] = iv[i];
-    }
+    }    
     //encrypt the message with the keystream and save to output
     for(int i=0; i<n; i++) {      
         ciphertext[i+10] = m[i] ^ keystream[i];  //replaced xor with ^            
-    }
+    }   
     //return size of ciphertext
     return n+10; 
 }
@@ -96,12 +103,12 @@ int secComponent::decrypt(char* m, int m_len, string k, int r, char* plaintext) 
   char iv [10];
   for(int i=0; i<10; i++) {
       iv[i] = m[i];
-  } 
+  }   
   //get the message without the iv  
   char msg_no_iv [m_len-10];
   for(int k=0; k<m_len-10; k++) {
       msg_no_iv[k]=m[k+10];
-  }
+  }  
   //prepend k to iv (store in kp)
   char kp[k.length()+10];
   //put the key in
@@ -113,7 +120,8 @@ int secComponent::decrypt(char* m, int m_len, string k, int r, char* plaintext) 
       kp[i] = iv[i-k.length()];
   }
   //get a keystream
-  string keystream = rc4(n-10, r, kp, k.length()+10); 
+  char keystream [1024];
+  rc4(n, r, kp, k.length()+10, keystream);  
   //decrypt the message with the keystream and save to output
   for(int i=0; i<n-10; i++) { 
     plaintext[i] = msg_no_iv[i] ^ keystream[i];
