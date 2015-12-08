@@ -24,12 +24,10 @@ regComponent::regComponent() {
     loadUsername();
 }
 
-
 //let the reg component know about the msgComponent
 void regComponent::bind_msgComponent(msgComponent * in) {
     msg = in;
 }
-
 
 void regComponent::loadKey() {
     ifstream dest_file;
@@ -102,12 +100,10 @@ void regComponent::loadIPTable() {
             }
         }
     }
-    dest_file.close();
-    
+    dest_file.close();   
     //init arrays
     dest_list = new string[lines];
-    name_list = new string[lines];
-    
+    name_list = new string[lines];    
     //read file
     dest_file.open("dest.sec");
     if(dest_file.is_open()) {
@@ -128,7 +124,6 @@ void regComponent::loadIPTable() {
     dest_file.close();
 }
 
-
 void regComponent::addIPToTable(string ip) {
     ofstream dest_file;
     dest_file.open("dest.sec", ios::app);
@@ -141,7 +136,6 @@ void regComponent::addIPToTable(string ip) {
     loadIPTable();
 }
 
-
 void regComponent::saveKey(string k) {
     system("rm key.sec");
     ofstream key_file;
@@ -150,17 +144,14 @@ void regComponent::saveKey(string k) {
     key_file.close();
 }
 
-
 void regComponent::setKey(string k) {
     key=k;
     saveKey(k);
 }
 
-
 void regComponent::printState() {
     cout << "Dest: " << name_list[dest];
 }
-
 
 void regComponent::printDest() {
     int i=0;
@@ -168,7 +159,6 @@ void regComponent::printDest() {
         cout << "|  " << i+1 << ": [" << name_list[i] << "] " << dest_list[i] << endl; 
     }
 }
-
 
 void regComponent::setDest(int d) {
     dest = d;
@@ -178,7 +168,6 @@ void regComponent::setDest(int d) {
     key_file << d;
     key_file.close();
 }
-
 
 int regComponent::getDest() {
     return dest;
