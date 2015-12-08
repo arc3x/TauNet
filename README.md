@@ -35,4 +35,4 @@ TauNet is distributed with a predefined key. Change this value in the setting me
     
 ### License
 
-MIT, see LISCENSE file  
+MIT, see LICENCE file  
