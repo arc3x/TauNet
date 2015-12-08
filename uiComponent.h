@@ -27,7 +27,6 @@ class uiComponent {
         enum menu_state {
             MAIN, SET_DEST, SETTINGS, SETTINGS_VIEW_KEY, SETTINGS_SET_KEY, SETTINGS_ADD_IP
         };
-
         uiComponent();
         void bind_regComponent(regComponent *);
         void run();

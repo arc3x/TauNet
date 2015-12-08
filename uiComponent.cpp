@@ -51,13 +51,11 @@ void uiComponent::run() {
             case(SETTINGS_ADD_IP):
                 draw_add_ip();
                 break;
-        }
-        
+        }        
         //get input
         getInput();
-
         //use input
-        switch(cur_menu) {
+        switch(cur_menu) { //which menu are we refering to?
             case(MAIN):
                 if(select=="1") {
                     cur_menu = SET_DEST;
@@ -80,11 +78,8 @@ void uiComponent::run() {
                         reg->setDest(i-1);          
                         cur_menu = MAIN;
                     }
-                }
-                 
-                
-                break;
-            //settings->view_key menu options   
+                }                                
+                break; 
             case(SETTINGS_VIEW_KEY):                
                 if (select == "s") {
                     cur_menu = SETTINGS;
