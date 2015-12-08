@@ -24,10 +24,9 @@ using namespace std;
 msgComponent * msg = new msgComponent();
 regComponent * reg = new regComponent();
 secComponent * sec = new secComponent();
-uiComponent * ui= new uiComponent();
+uiComponent * ui = new uiComponent();
 
-int main(int argc, char *argv[]) {
-   
+int main(int argc, char *argv[]) {   
     msg->bind_regComponent(reg); 
     msg->bind_secComponent(sec);
     reg->bind_msgComponent(msg);    
@@ -37,9 +36,12 @@ int main(int argc, char *argv[]) {
         msg->run();
     } else {
         ui->run();
-    }
-  
-        
+    }     
+
+    delete msg;
+    delete reg;
+    delete sec;
+    delete ui;
     
-    
+    return 1;
 }
