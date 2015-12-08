@@ -45,7 +45,6 @@ void secComponent::rc4(int n, int r, char* k, int l, char* keystream) {
       }
   }
   //produce the keystream
-  //string keystream;
   j=0;
   int ip;
   for(int i=0; i<n; i++) {
@@ -54,7 +53,6 @@ void secComponent::rc4(int n, int r, char* k, int l, char* keystream) {
       swap(S[ip], S[j]);
       keystream[i] = S[(S[ip]+S[j]) % 256];      
   }
-  //return keystream;
 }
 
 //"Ciphersaber-2 encrypt message" m "with key" k "and" r "rounds of key scheduling" "outputting to" ciphertext
@@ -88,7 +86,7 @@ int secComponent::encrypt(string m, string k, int r, char * ciphertext) {
     }    
     //encrypt the message with the keystream and save to output
     for(int i=0; i<n; i++) {      
-        ciphertext[i+10] = m[i] ^ keystream[i];  //replaced xor with ^            
+        ciphertext[i+10] = m[i] ^ keystream[i];              
     }   
     //return size of ciphertext
     return n+10; 
@@ -120,7 +118,7 @@ int secComponent::decrypt(char* m, int m_len, string k, int r, char* plaintext) 
       kp[i] = iv[i-k.length()];
   }
   //get a keystream
-  char keystream [1024];
+  char keystream [256];
   rc4(n, r, kp, k.length()+10, keystream);  
   //decrypt the message with the keystream and save to output
   for(int i=0; i<n-10; i++) { 
@@ -130,7 +128,36 @@ int secComponent::decrypt(char* m, int m_len, string k, int r, char* plaintext) 
   return n-10;
 }
 
-
-
-
-
+int secComponent::decrypt_long(char* m, int m_len, string k, int r, char* plaintext) {
+  //get length of m (unneccisary)  
+  int n = m_len;
+  //load iv
+  char iv [10];
+  for(int i=0; i<10; i++) {
+      iv[i] = m[i];
+  }   
+  //get the message without the iv  
+  char msg_no_iv [m_len-10];
+  for(int k=0; k<m_len-10; k++) {
+      msg_no_iv[k]=m[k+10];
+  }  
+  //prepend k to iv (store in kp)
+  char kp[k.length()+10];
+  //put the key in
+  for(unsigned int i=0; i<k.length(); i++) {
+      kp[i] = k[i];
+  }
+  //put the iv in
+  for(unsigned int i=k.length(); i<k.length()+10; i++) {
+      kp[i] = iv[i-k.length()];
+  }
+  //get a keystream
+  char keystream [20474];
+  rc4(n, r, kp, k.length()+10, keystream);  
+  //decrypt the message with the keystream and save to output
+  for(int i=0; i<n-10; i++) { 
+    plaintext[i] = msg_no_iv[i] ^ keystream[i];
+  }
+  //return the length of the plaintext  
+  return n-10;
+}
