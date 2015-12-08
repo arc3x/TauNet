@@ -27,7 +27,6 @@ class msgComponent {
         void get_input();
         void draw_get_input();
         void draw_header();
-        void draw_dest();
-        
+        void draw_dest();        
 };
 
