@@ -27,4 +27,12 @@ run the make file with the command
 
 TauNet must be run as a root level process to make network connections
 
-    sudo ./tauNet 
+    sudo ./tauNet [-msg]
+    
+### Notice
+
+TauNet is distributed with a predefined key. Change this value in the setting menu or by directly editing the key.sec file
+    
+### License
+
+MIT, see LISCENSE file  
