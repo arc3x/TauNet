@@ -65,12 +65,14 @@ void* listen(void *threadid) {
             char plaintext[msg_count];              
             //decrypt message and store in plaintext
             sec->decrypt(msg, msg_count, reg->key, 20, plaintext);          
-            //display plaintext message
-            cout << endl << endl;
-            for(int i=0; i<msg_count-10; i++) {
-                cout << plaintext[i];
+            //display plaintext message if it exists
+            if(msg_count>0) {
+                cout << endl << endl;
+                for(int i=0; i<msg_count-10; i++) {
+                    cout << plaintext[i];
+                }
+                cout << endl;                    
             }
-            cout << endl;                    
             //redraw user input prompt
             cout.clear();cout.flush();    
             cout << endl << "TauNet [TO: " << reg->name_list[reg->dest] << "]> "; cout.clear(); cout.flush();         
