@@ -32,6 +32,6 @@ class secComponent {
         
         //generates an rc4 keystream
         //arguments: desired length, rounds of key scheduling, key, keylength, keystream(output)
-        void rc4(int n, int r, char* k, int l, char* keystream)     
+        void rc4(int n, int r, char* k, int l, char* keystream);     
 };
 
