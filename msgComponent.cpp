@@ -31,8 +31,8 @@ msgComponent::msgComponent() {
 //
 // Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+// Distributed under the Boost Software License, Version 1.0. (See
+// at http://www.boost.org/LICENSE_1_0.txt)
 
 //Function for listener thread
 //This fucntion listens for incoming connections, recieves a message, decrypts it and displays it.
@@ -42,48 +42,43 @@ void* listen(void *threadid) {
         extern regComponent* reg;
         extern secComponent* sec;
         boost::asio::io_service io_service;
-
         tcp::endpoint endpoint(tcp::v4(), 6283);
         tcp::acceptor acceptor(io_service, endpoint);
-
         for (;;)
         {
           tcp::iostream stream;
           boost::system::error_code ec;
           acceptor.accept(*stream.rdbuf(), ec);
+          //if the is an incomming connection
           if (!ec)
           {           
             string message = "";
             string line;           
             char c;
-            char msg [1024];
-            int msg_count=0;
-            
+            char msg [1034];
+            int msg_count=0;            
             //get message
             while(stream.get(c)) {           
                 msg[msg_count++]=c;
-            }
-            
+            }           
             //make holder for plaintext
-            char plaintext[msg_count];   
-            
+            char plaintext[msg_count];              
             //decrypt message and store in plaintext
-            sec->decrypt(msg, msg_count, reg->key, 20, plaintext);
-            
+            sec->decrypt(msg, msg_count, reg->key, 20, plaintext);          
             //display plaintext message
             cout << endl << endl;
             for(int i=0; i<msg_count-10; i++) {
                 cout << plaintext[i];
             }
-            cout << endl;        
-            
+            cout << endl;                    
             //redraw user input prompt
             cout.clear();cout.flush();    
-            cout << endl << endl << "TauNet [TO: " << reg->name_list[reg->dest] << "]> ";        cout.clear();      
+            cout << endl << "TauNet [TO: " << reg->name_list[reg->dest] << "]> "; cout.clear(); cout.flush();         
           }
         }
         
       }
+      //catch any std exceptions
       catch (std::exception& e)
       {
         std::cerr << e.what() << std::endl;        
@@ -91,8 +86,7 @@ void* listen(void *threadid) {
     pthread_exit(NULL);
 }
 
-void msgComponent::run() {
-    //pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; //for later   
+void msgComponent::run() { 
     //spin off thread for listener
     pthread_t thread;
     int rc;
@@ -104,8 +98,7 @@ void msgComponent::run() {
     command="";
     //draw some ui
     draw_header();
-    draw_dest();
-    
+    draw_dest();    
     //c&c loop
     while(command!=":q") {        
         //get input
@@ -126,8 +119,7 @@ void msgComponent::run() {
             } else {
                 cout << "Destination out of range." << endl;
             }
-        }
-        
+        }       
         //else, its a message, send it!
         //CODE derived from daytime_client.cpp (Boost::asio)
         //Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
@@ -136,16 +128,13 @@ void msgComponent::run() {
             try {           
                 boost::asio::io_service io_service;
                 boost::asio::ip::tcp::resolver resolver(io_service);
-                boost::asio::ip::tcp::resolver::query query(reg->dest_list[reg->dest], "6283");
-
+                boost::asio::ip::tcp::resolver::query query(reg->dest_list[reg->dest], "6283");              
                 //attempt to open connection
                 tcp::iostream stream(reg->dest_list[reg->dest], "6283");
                 if (!stream)
                 {
                   std::cout << "Unable to connect: " << stream.error().message() << std::endl;
-                  //return;
-                }
-                
+                }                
                 //build message
                 string message;
                 message = string("version: 0.2\r\n") 
@@ -155,16 +144,13 @@ void msgComponent::run() {
                         + command + "\r\n";
                 
                 //init holder for ciphertext
-                char ciphertext [message.length()+10];
-                
+                char ciphertext [message.length()+10];                
                 //encrypt the message
-                sec->encrypt(message,reg->key,20, ciphertext);   
-                
+                sec->encrypt(message,reg->key,20, ciphertext);                  
                 //send the message
                 for(unsigned int i=0; i<message.length()+10; i++) {
                     stream << ciphertext[i];
                 }
-
                 //close the connection
                 stream.close();
             }
@@ -176,18 +162,15 @@ void msgComponent::run() {
     }
 }
 
-
 //let the msgComponent know about the regComponent
 void msgComponent::bind_regComponent(regComponent * in) {
     reg = in;
 }
 
-
 //let the msgComponent know about the secComponent
 void msgComponent::bind_secComponent(secComponent * in) {
     sec = in;
 }
-
 
 void msgComponent::draw_header() {
     system("clear");
@@ -199,11 +182,9 @@ void msgComponent::draw_header() {
     cout << "|------------TauNet Messenger------------|" << endl;
 }
 
-
 void msgComponent::draw_dest() {
     cout << "***     DESTINATION: [" << reg->name_list[reg->dest] << "]" << reg->dest_list[reg->dest] << "     ***" << endl;    
 }
-
 
 void msgComponent::get_input() {
     cout << endl;
