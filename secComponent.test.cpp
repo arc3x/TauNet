@@ -15,20 +15,7 @@ using namespace std;
 int test_encrypt_decrypt_inverting(secComponent * sec, string message, string key, int r, char * ciphertext, char * plaintext) {
     
     int ciphertext_len = sec->encrypt(message, key, r, ciphertext);
-    int plaintext_len = sec->decrypt(ciphertext, message.length()+10, key, r, plaintext);
-    
-    //cout << endl << endl;
-    //cout << "message: " << message << endl;
-    //cout << "ciphertext: ";
-    for(int i=0; i<ciphertext_len; i++) {
-        //cout << ciphertext[i];
-    }
-    //cout << endl;
-    //cout << "plaintext: ";
-    for(int i=0; i<plaintext_len; i++) {
-        //cout << plaintext[i];
-    }
-    //cout << endl;
+    int plaintext_len = sec->decrypt(ciphertext, message.length()+10, key, r, plaintext);   
     
     for(unsigned int i=0; i<message.length(); i++) {
         if(message[i]!=plaintext[i])
@@ -46,8 +33,8 @@ void zero(char * ar, int len) {
 int main(void) {
     secComponent * sec = new secComponent();
     int r = 20;
-    char ciphertext [1000];
-    char plaintext[1000];
+    unsigned char ciphertext [1000];
+    unsigned char plaintext[1000];
     string key = "password";
     string message = "";
    
