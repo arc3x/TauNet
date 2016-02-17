@@ -2,6 +2,9 @@
 
 (c) Matthew Slocum 2015
 
+### Note
+This program uses a stream cipher (RC4). There are many known attacks on stream ciphers. DO NOT use this for sensative information.
+
 ### Dependancies
 boost::asio
 
